@@ -44,3 +44,14 @@ class PatientForm(FlaskForm):
 class Up(FlaskForm):
     identity = IntegerField('identity',validators=[DataRequired()])
     submit = SubmitField('Submit')
+    
+
+class Search(FlaskForm):
+    id = IntegerField('identity*',validators=[DataRequired()])
+    ws_pat_name = StringField('Name',validators=[Regexp('^[A-Za-z]')])
+    ws_adrs = StringField('Address')
+    ws_age = StringField('Age',validators=[Regexp('^[0-9]'), Length(min=2)])
+    ws_doj = DateField('Date Of Joining',format='%d-%m-%Y')
+    HOUR_CHOICES = [('1', 'General'), ('2', 'Semi'), ('3', 'Simple')]
+    ws_rtype = SelectField('Room Type', choices=HOUR_CHOICES)
+    submit = SubmitField('Search')
