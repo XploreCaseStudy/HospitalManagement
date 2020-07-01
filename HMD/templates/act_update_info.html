@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container" style="padding-top:100px;width:500px;">
+    <div class="card">
+<div class="card-body">
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+        <input id="csrf_token" name="csrf_token" type="hidden" value="IjZmMGM4ZjMzZTUzMjM2YzA4M2ZjYjdkYzU2YzE0ODM0NGU0OTVjNDMi.XvtXuQ.uU0tiAyCID3FrHev5deUvFTWR_Y">
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">New Patient Addmission</legend>
+            <div class="form-group">
+                {{ form.ws_pat_name.label(class="form-control-label") }}
+
+                    {% if form.ws_pat_name.errors %}
+                        {{ form.ws_pat_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.ws_pat_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.ws_pat_name(class="form-control form-control-lg") }}
+                    {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.ws_age.label(class="form-control-label") }}
+
+                    {% if form.ws_age.errors %}
+                        {{ form.ws_age(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.ws_age.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.ws_age(class="form-control form-control-lg") }}
+                    {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.ws_doj.label(class="form-control-label") }}
+                {% if form.ws_doj.errors %}
+                    {{ form.ws_doj(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.ws_doj.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.ws_doj(class="form-control form-control-lg") }}
+                {% endif %}  
+            </div>
+            <div class="form-group">
+                {{ form.ws_rtype.label(class="form-control-label") }}
+                {% if form.ws_rtype.errors %}
+                    {{ form.ws_rtype(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.ws_rtype.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.ws_rtype(class="form-control form-control-lg") }}
+                {% endif %}    
+            </div>
+            <div class="form-group">
+                {{ form.ws_adrs.label(class="form-control-label") }}
+                {% if form.ws_adrs.errors %}
+                    {{ form.ws_adrs(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.ws_adrs.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.ws_adrs(class="form-control form-control-lg") }}
+                {% endif %}    
+            </div>
+
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-block btn-outline-info",value="Update") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-block btn-outline-info",value="Delete") }}
+        </div>
+    </form>
+
+</div>
+</div>
+</div>
+
+{% endblock content %}

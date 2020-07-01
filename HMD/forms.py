@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField,SelectField, SubmitField, BooleanField,DateField
+from wtforms import StringField, PasswordField,SelectField, SubmitField, BooleanField,DateField,IntegerField
 from wtforms.validators import DataRequired,Regexp, Length, Email, EqualTo, ValidationError
 from HMD.models import User,Patient
 
@@ -35,8 +35,12 @@ class LoginForm(FlaskForm):
 class PatientForm(FlaskForm):
     ws_pat_name = StringField('Name',validators=[DataRequired(),Regexp('^[A-Za-z]')])
     ws_adrs = StringField('Address',validators=[DataRequired()])
-    ws_age = StringField('Age',validators=[DataRequired(),Regexp('^[0-9]'), Length(min=3)])
-    ws_doj = DateField('Date Of Joining',format='%Y-%m-%d')
+    ws_age = StringField('Age',validators=[DataRequired(),Regexp('^[0-9]'), Length(min=2)])
+    ws_doj = DateField('Date Of Joining',format='%d-%m-%Y')
     HOUR_CHOICES = [('1', 'General'), ('2', 'Semi'), ('3', 'Simple')]
     ws_rtype = SelectField('Room Type', choices=HOUR_CHOICES)
+    submit = SubmitField('Submit')
+
+class Up(FlaskForm):
+    identity = IntegerField('identity',validators=[DataRequired()])
     submit = SubmitField('Submit')

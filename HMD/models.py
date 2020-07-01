@@ -20,12 +20,12 @@ class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ws_pat_name = db.Column(db.String(100), nullable=False)
     ws_adrs = db.Column(db.String(100), nullable=False)
-    ws_age = db.Column(db.String(100), nullable=False)
+    ws_age = db.Column(db.String(10), nullable=False)
     ws_doj = db.Column(db.String(100), nullable=False)
     ws_rtype = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.ws_pat_name}', '{self.ws_rtype}'), '{self.ws_age}')"
+        return f"{self.id},{self.ws_pat_name}, {self.ws_adrs}, {self.ws_age},{self.ws_doj},{self.ws_rtype}"
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

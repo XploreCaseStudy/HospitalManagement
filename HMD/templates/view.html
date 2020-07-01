@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    <table style="width:100%">
+        <tr>
+          <th>Patient ID</th>
+          <th>Patient Name</th>
+          <th>Patient Address</th>
+          <th>Patien Age</th>
+          <th>Date of Admission</th>
+          <th>Room Type</th>
+        </tr>
+        {% for pat in pats %}
+        <tr>
+          <td>{{pat.id}}</td>
+          <td>{{pat.ws_pat_name}}</td>
+          <td>{{pat.ws_adrs}}</td>
+          <td>{{pat.ws_age}}</td>
+          <td>{{pat.ws_doj}}</td>
+          <td>{{pat.ws_rtype}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+{% endblock content %}

@@ -1,8 +1,10 @@
 from flask import render_template, url_for, flash, redirect, request
+from flask import *
 from HMD import app, db, bcrypt
-from HMD.forms import RegistrationForm, LoginForm,PatientForm
+from HMD.forms import RegistrationForm, LoginForm,PatientForm,Up
 from HMD.models import User, Post,Patient
 from flask_login import login_user, current_user, logout_user, login_required
+from datetime import datetime
 
 
 posts = [
@@ -23,6 +25,7 @@ posts = [
 
 @app.route("/")
 @app.route("/home")
+@login_required
 def home():
     form = PatientForm()
     form = form
@@ -84,5 +87,53 @@ def newPatient():
         db.session.add(patient)
         db.session.commit()
         flash("Patient Data Created")
-        return redirect(url_for('home'))
+        return redirect(url_for('newPatient'))
     return render_template('home.html', title='home',form=form)
+
+@app.route("/update", methods=['GET', 'POST'])
+@login_required
+def update_info():
+    form = Up()
+    if request.method == 'POST':
+        id_update = request.form.get('id')
+        session['id_update'] = id_update
+        print(id_update)
+        return redirect(url_for('act_update_info',update_id = id_update))
+    return render_template('update.html')  
+
+@app.route("/act_update", methods=['GET', 'POST'])
+@login_required
+def act_update_info():
+    form = PatientForm()
+    id_update = session.get('id_update',None)
+    pat = Patient.query.get(int(id_update))
+    field = ["1","3","5","7","9"]
+    if form.validate_on_submit():
+        if 'Update' in request.form.values():
+            pat.ws_pat_name = form.ws_pat_name.data
+            pat.ws_age = form.ws_age.data
+            pat.ws_doj = form.ws_doj.data
+            pat.ws_rtype_name = form.ws_rtype.data
+            pat.ws_adrs = form.ws_adrs.data
+            db.session.commit()
+            flash("Your data has been updated",'success')
+            return redirect(url_for('act_update_info'))
+        if 'Delete' in request.form.values():
+            db.session.delete(pat)
+            db.session.commit()
+            flash("Your data has been deleted",'success')
+            return redirect(url_for('update_info'))
+    form.ws_pat_name.data = pat.ws_pat_name
+    form.ws_age.data = pat.ws_age
+    date_time_obj = datetime.strptime(pat.ws_doj,'%Y-%m-%d')
+    form.ws_doj.data = date_time_obj
+    form.ws_rtype.data = pat.ws_rtype
+    form.ws_adrs.data = pat.ws_adrs
+
+    return render_template('act_update_info.html',form=form,field=field)
+
+@app.route("/view", methods=['GET', 'POST'])
+@login_required
+def view():
+    pat = Patient.query.all()
+    return render_template('view.html',pats=pat)
