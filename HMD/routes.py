@@ -1,35 +1,17 @@
 from flask import render_template, url_for, flash, redirect, request
 from flask import *
 from HMD import app, db, bcrypt
-from HMD.forms import RegistrationForm, LoginForm,PatientForm,Up
+from HMD.forms import RegistrationForm, LoginForm,PatientForm,Up,Search
 from HMD.models import User, Post,Patient
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
-
-
-posts = [
-    {
-        'author': 'Corey Schafer',
-        'title': 'Blog Post 1',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Jane Doe',
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
-    }
-]
 
 
 @app.route("/")
 @app.route("/home")
 @login_required
 def home():
-    form = PatientForm()
-    form = form
-    return render_template('home.html',form=form)
+    return render_template('index.html')
 
 
 @app.route("/about")
@@ -137,3 +119,20 @@ def act_update_info():
 def view():
     pat = Patient.query.all()
     return render_template('view.html',pats=pat)
+
+
+@app.route("/search", methods=['GET', 'POST'])
+@login_required
+def search():
+    form = Search()
+    if request.method == 'POST':
+        id_update = form.id.data
+        pat = Patient.query.get(int(id_update))
+        if pat:
+            session['id_update'] = id_update
+            print(id_update)
+            return redirect(url_for('act_update_info',update_id = id_update))
+        else:
+            flash("Patient doesn't exist")
+    
+    return render_template('search.html',form=form)
