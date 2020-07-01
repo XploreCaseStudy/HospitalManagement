@@ -11,6 +11,16 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark">
+        <nav>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="{{ url_for('home') }}">Home</a></li>
+                    <li class="nav-item"><a href="{{ url_for('newPatient') }}">Add Patients</a></li>
+                    <li class="nav-item"><a href="{{ url_for('view') }}">View Patients</a></li>
+                    <li class="nav-item"><a href="{{ url_for('search') }}">Search Patients</a></li>
+                    <li class="nav-item"><a href="{{ url_for('logout') }}">logout</a></li>
+                </ul>
+            </nav>
+            <hr style="clear:both">
 <h1 style="padding-left:750px; color:white">Xplore Hospital</h1>
         <div class="" style="padding-left:650px; color:white">
         <small class="text-muted">
