@@ -131,8 +131,43 @@ def search():
         if pat:
             session['id_update'] = id_update
             print(id_update)
-            return redirect(url_for('act_update_info',update_id = id_update))
+            return redirect(url_for('sresult',update_id = id_update))
         else:
             flash("Patient doesn't exist")
     
     return render_template('search.html',form=form)
+
+@app.route("/sresult", methods=['GET', 'POST'])
+@login_required
+def sresult():
+    form = PatientForm()
+    id_update = session.get('id_update',None)
+    pat = Patient.query.get(int(id_update))
+    field = ["1","3","5","7","9"]
+    if form.validate_on_submit():
+        if 'Update' in request.form.values():
+            pat.ws_pat_name = form.ws_pat_name.data
+            pat.ws_age = form.ws_age.data
+            pat.ws_doj = form.ws_doj.data
+            pat.ws_rtype_name = form.ws_rtype.data
+            pat.ws_adrs = form.ws_adrs.data
+            db.session.commit()
+            flash("Your data has been updated",'success')
+            return redirect(url_for('sresult'))
+        if 'Delete' in request.form.values():
+            db.session.delete(pat)
+            db.session.commit()
+            flash("Your data has been deleted",'success')
+            return redirect(url_for('sresult'))
+        if 'Issue Medicines' in request.form.values():
+            return redirect(url_for('med',update_id = id_update))
+        if 'Add Diagnostics' in request.form.values():
+            return redirect(url_for('med',update_id = id_update))
+    form.ws_pat_name.data = pat.ws_pat_name
+    form.ws_age.data = pat.ws_age
+    date_time_obj = datetime.strptime(pat.ws_doj,'%Y-%m-%d')
+    form.ws_doj.data = date_time_obj
+    form.ws_rtype.data = pat.ws_rtype
+    form.ws_adrs.data = pat.ws_adrs
+    return render_template('sresult.html',form=form,field=field)
+
