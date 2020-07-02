@@ -1,0 +1,56 @@
+Creating Tables
+
+CREATE TABLE patient_diagnostics (
+	id INTEGER NOT NULL, 
+	patient_id INTEGER, 
+	test_id INTEGER, 
+	ws_pat_name VARCHAR(100) NOT NULL, 
+	test_name VARCHAR(100) NOT NULL, 
+	charge FLOAT, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(patient_id) REFERENCES patient (id), 
+	FOREIGN KEY(test_id) REFERENCES diagnostics (id)
+)
+CREATE TABLE medicines (
+	id INTEGER NOT NULL, 
+	m_name VARCHAR(100) NOT NULL, 
+	quantity FLOAT, 
+	charge FLOAT, 
+	PRIMARY KEY (id)
+)
+
+CREATE TABLE diagnostics (
+	id INTEGER NOT NULL, 
+	test_name VARCHAR(100) NOT NULL, 
+	charge FLOAT, 
+	PRIMARY KEY (id)
+)
+
+CREATE TABLE patient (
+	id INTEGER NOT NULL, 
+	ws_pat_name VARCHAR(100) NOT NULL, 
+	ws_adrs VARCHAR(100) NOT NULL, 
+	ws_age VARCHAR(10) NOT NULL, 
+	ws_doj VARCHAR(100) NOT NULL, 
+	ws_rtype VARCHAR(100) NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+CREATE TABLE user (
+	id INTEGER NOT NULL, 
+	username VARCHAR(10) NOT NULL, 
+	password VARCHAR(10) NOT NULL, 
+	PRIMARY KEY (id), 
+	UNIQUE (username)
+)
+
+Displaying Tables
+Select * from Patient
+
+Updating Tables
+
+update ws_pat_name from Patient where ID = "3";
+update ws_rtype from Patient where ID = "1";
+update ws_age from Patient where ID = "2";
+update ws_doj from Patient where ID = "3";
+
