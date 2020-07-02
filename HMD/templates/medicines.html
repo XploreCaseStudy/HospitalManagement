@@ -1,0 +1,235 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+   </style>
+<div class="row myr">
+    <div style="padding-left:1450px">
+        <button type="button" class="btn btn-outline-primary" >
+            <a class="font-weight-bold" href="{{ url_for('bill') }}">Billing</a>
+        </button>
+        <button type="button" class="btn btn-outline-primary pull-left" >
+            <a class="font-weight-bold" href="{{ url_for('diagnosis') }}">Diagnostics</a>
+        </button>
+        <button type="button" class="btn btn-outline-primary pull-left" >
+            <a class="font-weight-bold" href="{{ url_for('diagnosis') }}">Patient Details</a>
+        </button>
+    </div>
+</div>
+<div class="row myr">
+    <div class="col-4 myc">
+        <div class="row myr">
+            <div class="card">
+                <div class="card-body">
+                    <h1> Medicine </h1>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Charge</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for d in ds %}
+                        {% if d.quantity > 0 %}
+                        <tr>
+                            <!--      <th scope="row">1</th>-->
+                            <th>{{ d.id }}</th>
+                            <td>{{ d.m_name }}</td>
+                            <td>{{ d.charge }}</td>
+                            <td>{{ d.quantity }}</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col myc">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>New Medicine Form</h4>
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4">Enter Medicine:</legend>
+                                <div class="form-group">
+                                    {{ form2.mName.label(class="form-control-label") }}
+
+                                    {% if form2.mName.errors %}
+                                    {{ form2.mName(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form2.mName.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form2.mName(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4">Enter Charge:</legend>
+                                <div class="form-group">
+                                    {{ form2.charge.label(class="form-control-label") }}
+
+                                    {% if form2.charge.errors %}
+                                    {{ form2.charge(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form2.charge.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form2.charge(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4">Enter quantity:</legend>
+                                <div class="form-group">
+                                    {{ form2.quantity.label(class="form-control-label") }}
+
+                                    {% if form2.quantity.errors %}
+                                    {{ form2.quantity(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form2.quantity.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form2.quantity(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                            </fieldset>
+                            <div class="form-group">
+                                {{ form2.submit(class="btn btn-block btn-outline-info") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row myr">
+
+        </div>
+    </div>
+    <div class="col myc">
+        <div class="row myr">
+            <div class="col myc">
+                <div class="card">
+                    <div class="card-body">
+                        <h1> Patient </h1>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Date Of Joining</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <!--      <th scope="row">1</th>-->
+                                <th>{{ ps.id }}</th>
+                                <td>{{ ps.ws_pat_name }}</td>
+                                <td>{{ ps.ws_adrs }}</td>
+                                <td>{{ ps.ws_age }}</td>
+                                <td>{{ ps.ws_doj }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col myc">
+                <h4>Medicine Issue:</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <!--                    <div style="padding-left:150px">-->
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4">Select Medicine</legend>
+                                <div class="form-group">
+                                    {{ form.mname.label(class="form-control-label") }}
+
+                                    {% if form.mname.errors %}
+                                    {{ form.mname(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.mname.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.mname(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4">Enter Quantiy:</legend>
+                                <div class="form-group">
+                                    {{ form.quantity.label(class="form-control-label") }}
+
+                                    {% if form.quantity.errors %}
+                                    {{ form.quantity(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.quantity.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.quantity(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                            </fieldset>
+                            <div class="form-group">
+                                {{ form.submit(class="btn btn-block btn-outline-info") }}
+                            </div>
+                        </form>
+                        <!--                    </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row myr">
+            <div class="col-4 myc">
+                <h1>Patient Medicines</h1>
+            </div>
+            <div class="col myc">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group" style="padding-top:5px">
+                        {{ clear.Clean(class="btn btn-lg btn-outline-info") }}
+                    </div>
+                </form>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Charge</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for d in x %}
+                <tr>
+                    <!--      <th scope="row">1</th>-->
+                    <th>{{ d.id }}</th>
+                    <td>{{ d.m_name }}</td>
+                    <td>{{ d.charge }}</td>
+                    <td>{{ d.quantity }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

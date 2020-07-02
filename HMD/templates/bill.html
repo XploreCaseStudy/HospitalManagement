@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row myr" style="padding-left:50px">
+<!--    <h1>Patient Name</h1>-->
+<!--    <div class="card">-->
+<!--                <div class="card-body">-->
+                    <h1> Patient </h1>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Date Of Joining</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <!--      <th scope="row">1</th>-->
+                            <th>{{ ps.id }}</th>
+                            <td>{{ ps.ws_pat_name }}</td>
+                            <td>{{ ps.ws_adrs }}</td>
+                            <td>{{ ps.ws_age }}</td>
+                            <td>{{ ps.ws_doj }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+</div>
+<div class="row myr" style="padding-left:50px">
+    <h1>Patient Tests</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Charge</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for d in x %}
+                <tr>
+                    <!--      <th scope="row">1</th>-->
+                    <th>{{ d.id }}</th>
+                    <td>{{ d.test_name }}</td>
+                    <td>{{ d.charge }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+</div>
+<div class="row myr" style="padding-left:50px">
+    <h1>Patient Medicines</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Charge</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for d in m %}
+                <tr>
+                    <!--      <th scope="row">1</th>-->
+                    <th>{{ d.id }}</th>
+                    <td>{{ d.m_name }}</td>
+                    <td>{{ d.charge }}</td>
+                    <td>{{ d.quantity }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+</div>
+<div class="row myr" style="padding-left:700px">
+    <h4>Grand Total :{{p}}</h4>
+</div>
+<div class="row myr" style="padding-left:700px">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.submit(class="btn btn-block btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+    {% endblock content %}

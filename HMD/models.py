@@ -7,6 +7,9 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+class temp(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,12 +30,46 @@ class Patient(db.Model):
     def __repr__(self):
         return f"{self.id},{self.ws_pat_name}, {self.ws_adrs}, {self.ws_age},{self.ws_doj},{self.ws_rtype}"
 
-class Post(db.Model):
+
+class Diagnostics(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    test_name = db.Column(db.String(100), nullable=False)
+    charge = db.Column(db.Float)
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
+        return f"Diagnostics('{self.id}', '{self.test_name}', '{self.charge}')"
+
+
+class PatientDiagnostics(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer,db.ForeignKey('patient.id'))
+    test_id = db.Column(db.Integer,db.ForeignKey('diagnostics.id'))
+    ws_pat_name = db.Column(db.String(100), nullable=False)
+    test_name = db.Column(db.String(100), nullable=False)
+    charge = db.Column(db.Float)
+
+    def __repr__(self):
+        return f"PatientDiagnostics('{self.patient_id}'), '{self.test_id}')"
+
+class Medicines(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    m_name = db.Column(db.String(100), nullable=False)
+    quantity = db.Column(db.Float)
+    charge = db.Column(db.Float)
+
+    def __repr__(self):
+        return f"Medicines('{self.id}', '{self.m_name}', '{self.charge}')"
+
+
+class PatientMedicine(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer,db.ForeignKey('patient.id'))
+    m_id = db.Column(db.Integer,db.ForeignKey('diagnostics.id'))
+    ws_pat_name = db.Column(db.String(100), nullable=False)
+    m_name = db.Column(db.String(100), nullable=False)
+    quantity = db.Column(db.Float)
+    charge = db.Column(db.Float)
+
+    def __repr__(self):
+        return f"PatientDiagnostics('{self.patient_id}'), '{self.test_id}')"
+
