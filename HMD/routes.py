@@ -160,9 +160,9 @@ def sresult():
             flash("Your data has been deleted",'success')
             return redirect(url_for('sresult'))
         if 'Issue Medicines' in request.form.values():
-            return redirect(url_for('med',update_id = id_update))
+            return redirect(url_for('medicine',update_id = id_update))
         if 'Add Diagnostics' in request.form.values():
-            return redirect(url_for('med',update_id = id_update))
+            return redirect(url_for('dignostic',update_id = id_update))
     form.ws_pat_name.data = pat.ws_pat_name
     form.ws_age.data = pat.ws_age
     date_time_obj = datetime.strptime(pat.ws_doj,'%Y-%m-%d')
